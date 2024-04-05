@@ -4,7 +4,7 @@ let userClickedPattern = [];
 let started = false;
 let level = 0;
 
-document.addEventListener("keypress", function() {
+document.getElementById("start-btn").addEventListener("click", function() {
   if (!started) {
     document.getElementById("level-title").textContent = "Level " + level;
     nextSequence();
@@ -15,11 +15,13 @@ document.addEventListener("keypress", function() {
 const buttons = document.querySelectorAll(".btn");
 buttons.forEach(button => {
   button.addEventListener("click", function() {
-    const userChosenColour = this.id;
-    userClickedPattern.push(userChosenColour);
-    playSound(userChosenColour);
-    animatePress(userChosenColour);
-    checkAnswer(userClickedPattern.length - 1);
+    if (started) {
+      const userChosenColour = this.id;
+      userClickedPattern.push(userChosenColour);
+      playSound(userChosenColour);
+      animatePress(userChosenColour);
+      checkAnswer(userClickedPattern.length - 1);
+    }
   });
 });
 
@@ -33,7 +35,7 @@ function checkAnswer(currentLevel) {
   } else {
     playSound("wrong");
     document.body.classList.add("game-over");
-    document.getElementById("level-title").textContent = "Game Over, Press Any Key to Restart";
+    document.getElementById("level-title").textContent = "Game Over, Click the Start again";
     setTimeout(function() {
       document.body.classList.remove("game-over");
     }, 200);
